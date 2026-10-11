@@ -1,15 +1,17 @@
-QT += core gui widgets
+QT += widgets printsupport
 
 CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp \
-    projet.cpp
+    mainwindow.cpp
 
 HEADERS += \
-    mainwindow.h \
-    projet.h
+    mainwindow.h
 
-RESOURCES += \
-    resources.qrc
+FORMS += \
+    mainwindow.ui
+
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target

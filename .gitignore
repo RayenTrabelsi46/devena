@@ -1,0 +1,13 @@
+# Qt build artifacts
+build/
+*.o
+*.exe
+*.a
+*.so
+*.dll
+moc_*.cpp
+moc_*.o
+ui_*.h
+qrc_*.cpp
+*.pro.user
+*.pro.user.*

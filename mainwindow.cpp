@@ -1,4 +1,6 @@
 #include "mainwindow.h"
+#include "employe.h"
+#include "connection.h"
 
 #include <QWidget>
 #include <QPushButton>
@@ -260,6 +262,11 @@ MainWindow::MainWindow(QWidget *parent)
     resize(1300, 800);
     setWindowTitle("Devena - Gestion des projets");
 
+    // --- Connexion Oracle/ODBC via le Singleton ---
+    if (!Connection::createInstance().createConnection()) {
+        qDebug() << "[Devena] Oracle non disponible, mode démonstration local.";
+    }
+
     creerInterface();
 
     // Données de démonstration
@@ -366,17 +373,34 @@ void MainWindow::creerInterface()
         {
             "▣   Tableau de bord",
             "♣   Participants",
+            "♙   Employés",
             "♟   Equipes",
             "⌘   Projets",
             "★   Evaluations",
             "⚙   Paramètres"
         };
 
+    QPushButton *employeNavBtn = nullptr;
     for (const QString &menu : menus)
     {
         QPushButton *button = new QPushButton(menu);
         button->setStyleSheet(buttonStyle);
+        if (menu.contains("Employ")) employeNavBtn = button;
         side->addWidget(button);
+    }
+
+    // Connexion du bouton Employés → ouvre la page EmployePage
+    if (employeNavBtn) {
+        connect(employeNavBtn, &QPushButton::clicked, this, [this]() {
+            if (!m_employePage) {
+                m_employePage = new EmployePage;
+                m_employePage->setWindowFlags(Qt::Window);
+                m_employePage->setWindowTitle("Devena — Employés");
+            }
+            m_employePage->show();
+            m_employePage->raise();
+            m_employePage->activateWindow();
+        });
     }
 
     side->addStretch();

@@ -7,6 +7,8 @@
 
 #include "projet.h"
 
+class EmployePage;
+
 class QListWidget;
 class QLineEdit;
 class QLabel;
@@ -37,6 +39,7 @@ private:
     QLabel *statNombre = nullptr;
     QLabel *statDomaines = nullptr;
     QLabel *statGagnant = nullptr;
+    EmployePage *m_employePage = nullptr;
 };
 
 #endif // MAINWINDOW_H
